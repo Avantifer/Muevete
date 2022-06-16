@@ -10,7 +10,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="block(user?.uid)">
-        <ion-icon *ngIf="myself?.blocks.includes(user.uid); else unblock" slot="icon-only" name="lock-closed-outline" style="height: 22px;"></ion-icon>
+        <ion-icon *ngIf="myself?.blocks.includes(user?.uid); else unblock" slot="icon-only" name="lock-closed-outline" style="height: 22px;"></ion-icon>
         <ng-template #unblock>
           <ion-icon slot="icon-only" name="lock-open-outline" style="height: 22px;"></ion-icon>
         </ng-template>
@@ -51,7 +51,7 @@
       expand="full" 
       shape="round"
       (click)="contact(userId)"
-      [disabled]="myself?.blocks.includes(user.uid) || user?.blocks.includes(myself?.uid)"
+      [disabled]="myself?.blocks.includes(user?.uid) || user?.blocks.includes(myself?.uid)"
       >
       Enviar un mensaje
     </ion-button>

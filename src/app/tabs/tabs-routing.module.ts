@@ -60,11 +60,6 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'housing',
-        loadChildren: () => import('./housing/housing.module').then(m => m.HousingPageModule),
-        canActivate: [AuthGuard]
-      },
-      {
         path: 'administration',
         loadChildren: () => import('./administration/administration.module').then( m => m.AdministrationPageModule),
         canActivate: [AdministrationGuard]
