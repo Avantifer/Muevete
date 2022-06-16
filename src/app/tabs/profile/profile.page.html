@@ -1,0 +1,88 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Perfil
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button href="https://www.tiktok.com/@muevete_2022">
+        <ion-icon slot="icon-only" name="logo-tiktok"></ion-icon>
+      </ion-button>
+      <ion-button (click)="logOutAlert()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+      <!--<ion-button>
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>-->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Perfil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="perfil-top">
+    <ion-card-header id="perfil-top-content">
+      <ion-avatar (click)="changePhoto('#photo-input')" class="selectable" [ngClass]="user?.isOnline ?  'online' : 'offline'">
+        <img *ngIf="user" [src]="user?.photo" class="smooth" id="photo-image">
+      </ion-avatar>
+      <input type="file" class="hidden" id="photo-input" accept="image/png, image/jpeg">
+      <div>
+        <ion-card-title class="smooth" id="user-verified">
+          {{user?.name}}
+          <verification-tag *ngIf="user?.isVerified" role="button"></verification-tag>
+        </ion-card-title>
+        <ion-card-subtitle [color]="user?.isOnline ? 'success' : 'danger'">
+          <ion-text *ngIf="user" class="smooth">{{user?.isOnline ? 'On' : 'Off'}}line</ion-text>
+        </ion-card-subtitle>
+      </div>
+    </ion-card-header>
+  </div>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Presentación</ion-card-title>
+      &nbsp;
+      <ion-text (click)="edit('presentation')" class="selectable" id="edit-presentation">Editar</ion-text>
+      &nbsp;
+      <ion-text (click)="cancel('presentation')" class="hidden selectable" id="cancel-presentation">Cancelar</ion-text>
+    </ion-card-header>
+    
+    <ion-card-content id="presentation">
+      {{user?.presentation}}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Aficiones</ion-card-title>
+      &nbsp;
+      <ion-text (click)="edit('hobbies')" class="selectable" id="edit-hobbies">Editar</ion-text>
+      &nbsp;
+      <ion-text (click)="cancel('hobbies')" class="hidden selectable" id="cancel-hobbies">Cancelar</ion-text>
+      
+    </ion-card-header>
+    
+    <ion-card-content id="hobbies">
+      {{user?.hobbies}}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Experiencias</ion-card-title>
+      &nbsp;
+      <ion-text (click)="edit('experiences')" class="selectable" id="edit-experiences">Editar</ion-text>
+      &nbsp;
+      <ion-text (click)="cancel('experiences')" class="hidden selectable" id="cancel-experiences">Cancelar</ion-text>
+    </ion-card-header>
+    
+    <ion-card-content id="experiences">
+      {{user?.experiences}}
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

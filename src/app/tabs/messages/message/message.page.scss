@@ -1,0 +1,27 @@
+ion-item.message {
+
+    margin-left: 12px;
+
+    ion-label {
+
+         .name {
+            font-size: .75em;
+            color: var(--ion-color-primary);
+            font-weight: bolder;
+            text-decoration: none;
+        }
+    }
+
+}
+
+sup {
+    font-size: 12px;
+    float: right;
+}
+
+ion-footer {
+    ion-toolbar, ion-item {
+        --background: var(--ion-color-light) !important;
+    }
+
+}

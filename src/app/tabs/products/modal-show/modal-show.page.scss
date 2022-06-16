@@ -1,0 +1,103 @@
+
+.close-icon {
+  font-size: 2rem;
+  padding-right: 0.5rem;
+} 
+
+.btn-contact {
+  height: 2.6rem;
+}
+
+.image {
+  overflow: hidden;
+
+  .productImg {
+    ::ng-deep img {
+      background-image: var(--ion-item-background);
+      border-radius: 10px;
+    }
+
+    ::ng-deep .default {
+      color: black !important;
+      margin-right: 0.5rem;
+    }
+
+    ::ng-deep div {
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ion-color-light) !important;
+    }
+  }
+}
+
+.productPrice {
+  margin-left: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 1.25rem;
+  border-radius: 2rem;
+}
+
+.name {
+  letter-spacing: 1px;
+  font-weight: normal;
+  margin-top: 0.25rem;
+}
+
+.description {
+  white-space: break-spaces;
+  margin: 0.5rem 0.5rem 0 0.5rem;
+
+  &_title {
+    font-size: 1.3rem;
+  }
+}
+
+.item-button {
+  ion-button {
+    width: 12rem;
+    height: 2.5rem;
+    letter-spacing: 0 !important;
+  }
+}
+
+.commentsTitle {
+  padding-bottom: 0.5rem;
+}
+
+ion-content {
+  --background: var(--ion-item-background);
+}
+
+::ng-deep .alertDelete {
+  --max-width: 85%;
+}
+
+ion-label {
+  a {
+    font-size: small;
+  }
+}
+
+@media (max-width: 576px) {
+  .image {
+    .productImg {
+      ::ng-deep .default {
+        margin-right: 0 !important;
+      }
+    }
+  }
+}
+
+@media (min-width: 576px) {
+  .content {
+    width: 40rem;
+    margin: auto;
+
+    .image {
+      height: 30rem !important;
+    }
+  }
+}

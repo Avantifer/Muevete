@@ -1,0 +1,71 @@
+<form [formGroup]="commentGroup" (submit)="addComment()">
+  <ion-item lines="full" class="item__input">
+    <ion-input
+      type="text"
+      formControlName="comment"
+      autocapitalize="on"
+      placeholder="Inserte un Comentario"
+      [disabled]="disabled"
+    ></ion-input>
+    <ion-button slot="end" fill="clear" class="btn-send ion-margin-start" type="submit">
+      <ion-icon name="send-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <span
+    class="error ion-padding"
+    *ngIf="commentGroup.controls.comment.hasError('required') && commentGroup.controls.comment.touched"
+  >
+    <ion-icon name="alert-circle-outline"></ion-icon> El comentario no puede estar vacío
+  </span>
+</form>
+<div class="comments">
+  <div
+    class="comment border-bottom"
+    *ngFor="let comment of comments; trackBy: trackByFn;"
+  >
+    <ion-row class="comment__top ion-justify-content-between">
+      <ion-row class="comment__top-user ion-align-items-center">
+        <ion-avatar>
+          <img
+            [src]="comment.user_id | photoById | async"
+            alt="Avatar of User"
+          />
+        </ion-avatar>
+        <ion-col class="comment__top-user-names">
+          <ion-label>
+            <h2>{{comment.user_id | nameById | async}}</h2>
+            <p>Verificado o no verificado</p>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row class="comment__top-info">
+        <p class="ion-margin-right ion-align-self-center">
+          {{comment.date?.['seconds'] * 1000 | date:'shortDate'}}
+        </p>
+        <ion-row
+          class="likes ion-align-items-center"
+          [ngClass]="comment.likes.includes(user_id) ? 'liked' : ''"
+          role="button"
+          (click)="likeComment(comment)"
+        >
+          <p>{{comment.likes.length}}</p>
+          <ion-icon name="thumbs-up-outline"></ion-icon>
+        </ion-row>
+        <ion-row
+          class="ion-align-items-center"
+          role="button"
+          (click)="openAlertDelete(comment)"
+        >
+          <ion-icon
+            *ngIf="comment.user_id === user_id"
+            name="trash-outline"
+            class="remove self-align-items"
+          ></ion-icon>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+    <div class="comment__bottom">
+      <p>{{comment.content}}</p>
+    </div>
+  </div>
+</div>

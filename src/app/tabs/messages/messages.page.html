@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Chats
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['../finder']">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" #content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Chats</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <ion-list *ngIf="conversations?.length > 0; else noConver" (domChange)="onDomChange($event)">
+
+    <ion-item-sliding *ngFor="let conv of conversations; trackBy: trackByFn" #slidingItem>
+      <ion-item [routerLink]="[conv?.id]" (click)="clearUnread(conv?.id)">
+        <ion-avatar slot="start">
+          <img *ngIf="conv?.members | excludeMyself | async | photoById | async" class="smooth" [src]="conv?.members | excludeMyself | async | photoById | async"/>
+        </ion-avatar>
+        <ion-label>
+          <h2>
+            <ion-text class="smooth">{{ conv?.members | excludeMyself | async | nameById | async }}</ion-text>
+          </h2>
+          <h3 class="smooth">{{conv?.lastMessage}}</h3>
+        </ion-label>
+        <ion-badge *ngIf="conv[user] > 0" slot="end" color="danger">{{conv[user]}}</ion-badge>
+      </ion-item>
+      <ion-item-options>
+        <ion-item-option color="danger" (click)="delete(slidingItem, conv.id)">
+          <ion-icon slot="icon-only" name="trash-bin-outline"></ion-icon>
+          <!--Borrar-->
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <ng-template #noConver>
+
+    <app-explore-container 
+      name="Ninguna conversación"
+      message="Puedes comenzar una conversación desde el perfil de un usuario o desde un producto por el que estés interesado."
+    ></app-explore-container>
+    
+  </ng-template>
+
+</ion-content>

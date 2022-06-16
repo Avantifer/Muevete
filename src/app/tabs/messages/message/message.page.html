@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="app/messages" (click)="clearUnread(conversation?.id)"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="smooth">{{ this.contactName }}</ion-title>
+    <ion-avatar slot="start" style="width: 36px !important;  
+    height : 36px !important; ">
+      <img *ngIf="photo" [src]="photo" class="smooth"/>
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  <ion-list (domChange)="onDomChange($event)" class="smooth">
+
+    <ion-item-sliding *ngFor="let message of messages; trackBy: trackByFn" #slidingItem>
+      
+      <ion-item *ngIf="!message.system" class="message">
+        <ion-label [style]="(message.senderId == myId) ? 'text-align:right;' : ''" text-wrap>
+          <a *ngIf="message.senderId != myId" class="name" [routerLink]="'/app/user/'+message.senderId">{{contactName}}</a>
+          <h3 [style]="'font-size: larger; '+(message.senderId == myId ? 'opacity: .75;' : '')">
+            <ng-container 
+              [ngTemplateOutlet]="message.deleted ? notDeleted : deleted" 
+              [ngTemplateOutletContext]="{message:message}">
+            </ng-container>
+          </h3>    
+        </ion-label>
+        <ion-note [slot]="'end'">
+          {{message?.createdAt?.['seconds']*1000 | date:'shortTime'}}
+        </ion-note>
+      </ion-item>
+
+      <ion-item *ngIf="message.system">
+        <br>
+        <ion-label class="ion-text-center">
+          <ion-chip>
+            <ion-label>
+              {{message?.createdAt?.['seconds']*1000 | date: 'dd / MM / yyyy'}}
+            </ion-label>
+          </ion-chip>
+        </ion-label>
+        <br>
+      </ion-item>
+
+
+
+      <ion-item-options *ngIf="message.senderId == myId && !message.deleted">
+        <ion-item-option color="danger" (click)="delete(slidingItem, conversation.id,message.messageId)">
+          <ion-icon slot="icon-only" name="trash-bin-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ng-template #deleted let-message='message'>
+      <ion-text>{{ message.content }}</ion-text>
+      <br>
+      <a 
+        *ngIf="message.productId"
+        [routerLink]="'/app/products/'+message.productId"
+      >Ver producto</a>
+    </ng-template>
+    
+    <ng-template #notDeleted let-message='message'>
+      <ion-text style="font-style: italic;">Mensaje eliminado.</ion-text>
+    </ng-template>
+
+  </ion-list>
+</ion-content>
+
+
+
+<ion-footer keyboard-attach>
+  <ion-toolbar>
+    <form (ngSubmit)="sendMessage()">
+    <ion-item>
+      <ion-input 
+        [formControl]="msgToSend" 
+        [disabled]="myself?.blocks.includes(contactUid) || contactBlocks?.includes(myself?.uid)"
+        required 
+        spellcheck="true"
+      ></ion-input>
+      <ion-button type="submit" [disabled]="msgToSend.value==''" item-end>
+        <ion-icon name="send-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+    </form>
+  </ion-toolbar>
+</ion-footer>
